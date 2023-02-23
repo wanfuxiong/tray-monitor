@@ -51,7 +51,9 @@ const preload = join(__dirname, "../preload/index.js");
 const url = process.env.VITE_DEV_SERVER_URL;
 const indexHtml = join(process.env.DIST, "index.html");
 
+let cpuTray: Tray;
 let ramTray: Tray;
+let networkTray: Tray;
 
 async function createWindow() {
     win = new BrowserWindow({
@@ -135,7 +137,24 @@ ipcMain.handle("open-win", (_, arg) => {
     }
 });
 
-ipcMain.handle("ram", (_, dataURL: string) => {
+ipcMain.handle("cpu", (_, visible: boolean, dataURL: string) => {
+    const icon = nativeImage.createFromDataURL(dataURL);
+    if (cpuTray) {
+        cpuTray.setImage(icon);
+    } else {
+        cpuTray = new Tray(icon);
+        const contextMenu = Menu.buildFromTemplate([
+            { label: "隐藏", type: "normal" },
+        ]);
+        cpuTray.setContextMenu(contextMenu);
+        cpuTray.setToolTip("CPU");
+        cpuTray.addListener("click", () => {
+            win.show();
+        });
+    }
+});
+
+ipcMain.handle("ram", (_, visible: boolean, dataURL: string) => {
     const icon = nativeImage.createFromDataURL(dataURL);
     if (ramTray) {
         ramTray.setImage(icon);
@@ -146,5 +165,25 @@ ipcMain.handle("ram", (_, dataURL: string) => {
         ]);
         ramTray.setContextMenu(contextMenu);
         ramTray.setToolTip("内存");
+        ramTray.addListener("click", () => {
+            win.show();
+        });
+    }
+});
+
+ipcMain.handle("network", (_, visible: boolean, dataURL: string) => {
+    const icon = nativeImage.createFromDataURL(dataURL);
+    if (networkTray) {
+        networkTray.setImage(icon);
+    } else {
+        networkTray = new Tray(icon);
+        const contextMenu = Menu.buildFromTemplate([
+            { label: "隐藏", type: "normal" },
+        ]);
+        networkTray.setContextMenu(contextMenu);
+        networkTray.setToolTip("网络");
+        networkTray.addListener("click", () => {
+            win.show();
+        });
     }
 });
