@@ -127,7 +127,10 @@ onMounted(() => {
                 //     stats[0].tx_sec,
                 //     (interfaces[0].speed * 1024 * 1024) / 8
                 // );
-                const max = (interfaces[0].speed * 1024 * 1024) / 8;
+                const speed = Array.isArray(interfaces)
+                    ? interfaces[0].speed
+                    : interfaces.speed;
+                const max = ((speed || 0) * 1024 * 1024) / 8;
                 const receive = stats[0].rx_sec;
                 if (receive || receive === 0) {
                     console.log(receive, max);
