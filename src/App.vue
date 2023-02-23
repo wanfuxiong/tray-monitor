@@ -78,11 +78,7 @@ onMounted(() => {
                     (cpuArray[i] / 100) * 224
                 );
             }
-            ipcRenderer.invoke(
-                "cpu",
-                cpuTrayVisible.value,
-                cpuCanvas.toDataURL("image/png")
-            );
+            ipcRenderer.invoke("cpu", cpuCanvas.toDataURL("image/png"));
             ramCanvas = null;
         });
     }
@@ -111,11 +107,7 @@ onMounted(() => {
                 (ramArray[i] / totalRam) * 224
             );
         }
-        ipcRenderer.invoke(
-            "ram",
-            ramTrayVisible.value,
-            ramCanvas.toDataURL("image/png")
-        );
+        ipcRenderer.invoke("ram", ramCanvas.toDataURL("image/png"));
         ramCanvas = null;
     }
 
@@ -158,7 +150,6 @@ onMounted(() => {
                     }
                     ipcRenderer.invoke(
                         "network",
-                        networkTrayVisible.value,
                         networkCanvas.toDataURL("image/png")
                     );
                     ramCanvas = null;

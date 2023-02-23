@@ -55,6 +55,10 @@ let cpuTray: Tray;
 let ramTray: Tray;
 let networkTray: Tray;
 
+let cpuTrayVisible: boolean = true;
+let ramTrayVisible: boolean = true;
+let networkTrayVisible: boolean = true;
+
 Menu.setApplicationMenu(null);
 
 async function createWindow() {
@@ -146,14 +150,20 @@ ipcMain.handle("open-win", (_, arg) => {
     }
 });
 
-ipcMain.handle("cpu", (_, visible: boolean, dataURL: string) => {
+ipcMain.handle("cpu", (_, dataURL: string) => {
     const icon = nativeImage.createFromDataURL(dataURL);
     if (cpuTray) {
-        cpuTray.setImage(icon);
+        cpuTrayVisible && cpuTray.setImage(icon);
     } else {
         cpuTray = new Tray(icon);
         const contextMenu = Menu.buildFromTemplate([
-            { label: "隐藏", type: "normal" },
+            {
+                label: "退出",
+                type: "normal",
+                click: () => {
+                    app.quit();
+                },
+            },
         ]);
         cpuTray.setContextMenu(contextMenu);
         cpuTray.setToolTip("CPU");
@@ -163,14 +173,20 @@ ipcMain.handle("cpu", (_, visible: boolean, dataURL: string) => {
     }
 });
 
-ipcMain.handle("ram", (_, visible: boolean, dataURL: string) => {
+ipcMain.handle("ram", (_, dataURL: string) => {
     const icon = nativeImage.createFromDataURL(dataURL);
     if (ramTray) {
         ramTray.setImage(icon);
     } else {
         ramTray = new Tray(icon);
         const contextMenu = Menu.buildFromTemplate([
-            { label: "隐藏", type: "normal" },
+            {
+                label: "退出",
+                type: "normal",
+                click: () => {
+                    app.quit();
+                },
+            },
         ]);
         ramTray.setContextMenu(contextMenu);
         ramTray.setToolTip("内存");
@@ -180,14 +196,20 @@ ipcMain.handle("ram", (_, visible: boolean, dataURL: string) => {
     }
 });
 
-ipcMain.handle("network", (_, visible: boolean, dataURL: string) => {
+ipcMain.handle("network", (_, dataURL: string) => {
     const icon = nativeImage.createFromDataURL(dataURL);
     if (networkTray) {
         networkTray.setImage(icon);
     } else {
         networkTray = new Tray(icon);
         const contextMenu = Menu.buildFromTemplate([
-            { label: "隐藏", type: "normal" },
+            {
+                label: "退出",
+                type: "normal",
+                click: () => {
+                    app.quit();
+                },
+            },
         ]);
         networkTray.setContextMenu(contextMenu);
         networkTray.setToolTip("网络");

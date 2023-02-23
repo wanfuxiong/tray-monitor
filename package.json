@@ -1,6 +1,6 @@
 {
     "name": "tray-monitor",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "main": "dist-electron/main/index.js",
     "description": "位于托盘的电脑性能监视器",
     "author": "万福熊",
