@@ -55,11 +55,13 @@ let cpuTray: Tray;
 let ramTray: Tray;
 let networkTray: Tray;
 
+Menu.setApplicationMenu(null);
+
 async function createWindow() {
     win = new BrowserWindow({
         title: "Main window",
         icon: join(process.env.PUBLIC, "favicon.ico"),
-        width: 500,
+        width: 300,
         height: 200,
         resizable: false,
         webPreferences: {
@@ -93,6 +95,13 @@ async function createWindow() {
     win.webContents.on("will-navigate", (event, url) => {
         event.preventDefault();
         shell.openExternal(url);
+    });
+
+    win.on("minimize", (e) => {
+        if (win?.isMinimized()) {
+            e.preventDefault();
+            win.hide();
+        }
     });
 }
 

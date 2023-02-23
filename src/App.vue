@@ -145,9 +145,12 @@ onMounted(() => {
                     for (let i = 0; i < ramArray.length; i++) {
                         ctx.fillRect(
                             16 + i * 16,
-                            ((max - networkArray[i] * 10) / max) * 224 + 16,
+                            ((max - Math.min(networkArray[i] * 20, max)) /
+                                max) *
+                                224 +
+                                16,
                             16,
-                            ((networkArray[i] * 10) / max) * 224
+                            (Math.min(networkArray[i] * 20, max) / max) * 224
                         );
                     }
                     ipcRenderer.invoke(
@@ -180,7 +183,10 @@ onMounted(() => {
 </script>
 
 <template>
-    <div>
+    <div id="app-inner">
+        <a href="https://www.wanfuxiong.com">
+            <img src="./assets/wanfuxiong-qr.png" style="width: 200px" />
+        </a>
         <!--<input id="cpu-checkbox" type="checkbox" v-model="cpuTrayVisible" />-->
         <!--<label for="cpu-checkbox">cpu</label>-->
         <!--<input id="ram-checkbox" type="checkbox" v-model="ramTrayVisible" />-->
@@ -198,4 +204,14 @@ onMounted(() => {
     </div>
 </template>
 
-<style></style>
+<style>
+#app-inner {
+    width: 100vw;
+    height: 100vh;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+</style>
