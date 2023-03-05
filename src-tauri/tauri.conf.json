@@ -38,7 +38,7 @@
                 "icons/icon.icns",
                 "icons/icon.ico"
             ],
-            "identifier": "com.tauri.dev",
+            "identifier": "com.wanfuxiong.traymonitor",
             "targets": "all"
         },
         "security": {
@@ -55,6 +55,10 @@
                 "height": 200,
                 "resizable": false
             }
-        ]
+        ],
+        "systemTray": {
+            "iconPath": "icons/icon.png",
+            "iconAsTemplate": true
+        }
     }
 }
