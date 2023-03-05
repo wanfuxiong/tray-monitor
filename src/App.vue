@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from "vue";
-import si from "systeminformation";
 import { invoke } from "@tauri-apps/api/tauri";
 import { drawTrayIcon } from "./utils";
 

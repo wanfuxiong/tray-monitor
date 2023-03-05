@@ -9,11 +9,13 @@ fn greet(name: &str) -> String {
 
 fn main() {
     use tauri::Manager;
+    // use tauri::SystemTray;
+    // let tray = SystemTray::new();
     tauri::Builder::default()
         .setup(|app| {
             #[cfg(debug_assertions)] // only include this code on debug builds
             {
-                let window = app.get_window("main").unwrap();
+            let window = app.get_window("main").unwrap();
                 window.open_devtools();
                 window.close_devtools();
             }
